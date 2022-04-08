@@ -14,7 +14,7 @@ def check_win(temp_board, r, c, tile, num=4):
     while temp_col < COL_COUNT and temp_board[temp_row][temp_col] == tile:
         count += 1
         temp_col += 1
-    if count - 1 == num:
+    if count - 1 >= num:
         return True
     count = 0
     temp_col = c
@@ -27,7 +27,7 @@ def check_win(temp_board, r, c, tile, num=4):
     while temp_row < ROW_COUNT and temp_board[temp_row][temp_col] == tile:
         count += 1
         temp_row += 1
-    if count - 1 == num:
+    if count - 1 >= num:
         return True
     count = 0
 
@@ -44,7 +44,7 @@ def check_win(temp_board, r, c, tile, num=4):
         count += 1
         temp_row += 1
         temp_col += 1
-    if count - 1 == num:
+    if count - 1 >= num:
         return True
     count = 0
 
@@ -61,7 +61,7 @@ def check_win(temp_board, r, c, tile, num=4):
         count += 1
         temp_row -= 1
         temp_col += 1
-    if count - 1 == num:
+    if count - 1 >= num:
         return True
 
     return False

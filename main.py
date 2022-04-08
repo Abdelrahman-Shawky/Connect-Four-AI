@@ -13,7 +13,7 @@ my_font = pygame.font.SysFont("monospace", 60)
 BG = pygame.image.load("assets/Background.png")
 
 
-def start_game(game_type):
+def start_game(game_type, depth):
     # Create empty board to start the game
     def create_board():
         board = np.zeros((ROW_COUNT, COL_COUNT))  # create 2D array
@@ -78,19 +78,19 @@ def start_game(game_type):
             # col = random.randint(0, COL_COUNT-1)
             # col = pick_best_move(board)
             # is_alpha_beta = True
-            my_depth = 3
+            # my_depth = 3
             if game_type == 0:
                 col = random.randint(0, COL_COUNT - 1)
             elif game_type == 1:
-                col = next_move(board, my_depth, False)
+                col = next_move(board, depth, False)
             else:
-                col = next_move(board, my_depth, True)
+                col = next_move(board, depth, True)
 
             # col, score = minimax(board, 3, True)
             print("----------------------")
             # col, score = minimax_alpha_beta(board, 4, -math.inf, math.inf, True)
             if is_valid(board, col):
-                pygame.time.wait(100)
+                # pygame.time.wait(100)
                 row = get_row(board, col)
                 add_tile(board, row, col, turn)
                 draw_board(board)
@@ -103,6 +103,8 @@ def start_game(game_type):
         # print(board)
         if game_over:
             pygame.time.wait(3000)
+            screen.fill((0,0,0))
+            screen.blit(BG, (0, 0))
 
 
 def game_menu():
@@ -139,9 +141,9 @@ def game_menu():
                 if random_button.checkForInput(MENU_MOUSE_POS):
                     start_game(0)
                 if no_pruning.checkForInput(MENU_MOUSE_POS):
-                    start_game(1)
+                    select_depth(1)
                 if pruning.checkForInput(MENU_MOUSE_POS):
-                    start_game(2)
+                    select_depth(2)
                 if quit_button.checkForInput(MENU_MOUSE_POS):
                     pygame.quit()
                     sys.exit()
@@ -149,4 +151,62 @@ def game_menu():
         pygame.display.update()
 
 
+def select_depth(game_type):
+    # base_font = pygame.font.Font(None, 32)
+    user_text = ''
+    screen.fill((0,0,0,))
+    screen.blit(BG, (0, 0))
+    pygame.display.update()
+    input_rect = pygame.Rect(150, 200, 400, 100)
+    color_active = pygame.Color('lightskyblue3')
+    color_passive = pygame.Color('gray15')
+    color = color_passive
+    active = False
+
+    while True:
+
+        depth_text = my_font.render("Select Depth", True, "#b68f40")
+        depth_rect = depth_text.get_rect(center=(350, 75))
+        screen.blit(depth_text, depth_rect)
+        MENU_MOUSE_POS = pygame.mouse.get_pos()
+
+        play_button = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(350, 400),
+                               text_input="PLAY", font=my_font, base_color="#d7fcd4", hovering_color="White")
+        back_button = Button(image=pygame.image.load("assets/Quit Rect.png"), pos=(350, 575),
+                             text_input="BACK", font=my_font, base_color="#d7fcd4", hovering_color="White")
+        for button in [play_button, back_button]:
+            button.changeColor(MENU_MOUSE_POS)
+            button.update(screen)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if input_rect.collidepoint(event.pos):
+                    active = True
+                else:
+                    active = False
+                if play_button.checkForInput((MENU_MOUSE_POS)):
+                    start_game(game_type, int(user_text))
+                if back_button.checkForInput(MENU_MOUSE_POS):
+                    game_menu()
+            if event.type == pygame.KEYDOWN:
+                if active:
+                    if event.key == pygame.K_BACKSPACE:
+                        user_text = user_text[:-1]
+                    else:
+                        user_text += event.unicode
+        if active:
+            color = color_active
+        else:
+            color = color_passive
+        pygame.draw.rect(screen, color, input_rect, 2)
+        text_surface = my_font.render(user_text, True, "#b68f40")
+        screen.blit(text_surface, (input_rect.x + 30, input_rect.y + 5))
+        input_rect.w = max(text_surface.get_width(), 400)
+        pygame.display.update()
+
+
+# select_depth(1)
 game_menu()
