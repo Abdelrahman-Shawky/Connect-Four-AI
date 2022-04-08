@@ -1,5 +1,4 @@
 from variables import *
-from functions import *
 import random
 
 
@@ -90,6 +89,7 @@ def add_tile(my_board, r, c, tile):
 
 def remove_tile(copy_board, r, c):
     copy_board[r][c] = 0
+
 
 def scoring(window, tile):
     score = 0
@@ -183,6 +183,7 @@ def winning_move(board, tile):
         for r in range(3, ROW_COUNT):
             if board[r][c] == tile and board[r - 1][c + 1] == tile and board[r - 2][c + 2] == tile and board[r - 3][c + 3] == tile:
                 return True
+
 
 def is_terminal(board):
     return winning_move(board, AI) or winning_move(board, PLAYER) or len(valid_locations(board)) == 0

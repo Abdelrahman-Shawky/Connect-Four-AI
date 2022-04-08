@@ -6,7 +6,7 @@ class Node:
         self.max_min = max_min
         self.children = []
 
-    def add_child(self,child):
+    def add_child(self, child):
         self.children.append(child)
 
     def get_children(self):

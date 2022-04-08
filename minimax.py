@@ -25,13 +25,13 @@ def minimax(board, depth, maximizing_player, root):
         value = -math.inf
         best_col = random.choice(valid)
         for c in valid:
-            childNode = Node(root, -math.inf, root.get_child_state())
-            root.add_child(childNode)
+            child_node = Node(root, -math.inf, root.get_child_state())
+            root.add_child(child_node)
             r = get_row(board, c)
             temp_board = board.copy()
             add_tile(temp_board, r, c, AI)
             # print(temp_board)
-            new_score = minimax(temp_board, depth-1, False, childNode)[1]
+            new_score = minimax(temp_board, depth-1, False, child_node)[1]
             # print("2")
             # print(new_score)
             # print(new_score)
@@ -45,12 +45,12 @@ def minimax(board, depth, maximizing_player, root):
         value = math.inf
         best_col = random.choice(valid)
         for c in valid:
-            childNode = Node(root, -math.inf, root.get_child_state())
-            root.add_child(childNode)
+            child_node = Node(root, -math.inf, root.get_child_state())
+            root.add_child(child_node)
             r = get_row(board, c)
             temp_board = board.copy()
             add_tile(temp_board, r, c, PLAYER)
-            new_score = minimax(temp_board, depth - 1, True, childNode)[1]
+            new_score = minimax(temp_board, depth - 1, True, child_node)[1]
             if new_score < value:
                 value = new_score
                 best_col = c
@@ -74,12 +74,12 @@ def minimax_alpha_beta(board, depth, alpha, beta, maximizing_player, root):
         value = -math.inf
         best_col = random.choice(valid)
         for c in valid:
-            childNode = Node(root, -math.inf, root.get_child_state())
-            root.add_child(childNode)
+            child_node = Node(root, -math.inf, root.get_child_state())
+            root.add_child(child_node)
             r = get_row(board, c)
             temp_board = board.copy()
             add_tile(temp_board, r, c, AI)
-            new_score = minimax_alpha_beta(temp_board, depth-1, alpha, beta, False, childNode)[1]
+            new_score = minimax_alpha_beta(temp_board, depth-1, alpha, beta, False, child_node)[1]
             if new_score > value:
                 value = new_score
                 best_col = c
@@ -93,12 +93,12 @@ def minimax_alpha_beta(board, depth, alpha, beta, maximizing_player, root):
         value = math.inf
         best_col = random.choice(valid)
         for c in valid:
-            childNode = Node(root, -math.inf, root.get_child_state())
-            root.add_child(childNode)
+            child_node = Node(root, -math.inf, root.get_child_state())
+            root.add_child(child_node)
             r = get_row(board, c)
             temp_board = board.copy()
             add_tile(temp_board, r, c, PLAYER)
-            new_score = minimax_alpha_beta(temp_board, depth - 1, alpha, beta, True, childNode)[1]
+            new_score = minimax_alpha_beta(temp_board, depth - 1, alpha, beta, True, child_node)[1]
             if new_score < value:
                 value = new_score
                 best_col = c
