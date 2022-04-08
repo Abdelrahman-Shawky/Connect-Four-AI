@@ -4,14 +4,16 @@ from minimax import next_move
 # from gui import *
 from functions import *
 import numpy as np
+from Button import *
 
 pygame.init()
 pygame.display.set_caption('Connect Four')
 screen = pygame.display.set_mode(SIZE)
 my_font = pygame.font.SysFont("monospace", 60)
+BG = pygame.image.load("assets/Background.png")
 
 
-def start_game():
+def start_game(game_type):
     # Create empty board to start the game
     def create_board():
         board = np.zeros((ROW_COUNT, COL_COUNT))  # create 2D array
@@ -20,7 +22,8 @@ def start_game():
     def draw_board(board):
         for c in range(COL_COUNT):
             for r in range(ROW_COUNT):
-                pygame.draw.rect(screen, BLUE, (c * SQUARE_SIZE, r * SQUARE_SIZE + SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
+                pygame.draw.rect(screen, BLUE,
+                                 (c * SQUARE_SIZE, r * SQUARE_SIZE + SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
                 # if board[r][c] == 0:
                 pygame.draw.circle(screen, BLACK, (
                     c * SQUARE_SIZE + SQUARE_SIZE / 2, int(r * SQUARE_SIZE + SQUARE_SIZE + SQUARE_SIZE / 2)),
@@ -29,11 +32,13 @@ def start_game():
             for r in range(ROW_COUNT):
                 if board[r][c] == PLAYER:
                     pygame.draw.circle(screen, RED,
-                                       (c * SQUARE_SIZE + SQUARE_SIZE / 2, HEIGHT - int(r * SQUARE_SIZE + SQUARE_SIZE / 2)),
+                                       (c * SQUARE_SIZE + SQUARE_SIZE / 2,
+                                        HEIGHT - int(r * SQUARE_SIZE + SQUARE_SIZE / 2)),
                                        int(SQUARE_SIZE / 2 - 5))
                 elif board[r][c] == AI:
                     pygame.draw.circle(screen, YELLOW,
-                                       (c * SQUARE_SIZE + SQUARE_SIZE / 2, HEIGHT - int(r * SQUARE_SIZE + SQUARE_SIZE / 2)),
+                                       (c * SQUARE_SIZE + SQUARE_SIZE / 2,
+                                        HEIGHT - int(r * SQUARE_SIZE + SQUARE_SIZE / 2)),
                                        int(SQUARE_SIZE / 2 - 5))
         pygame.display.update()
 
@@ -72,9 +77,14 @@ def start_game():
         if turn == AI and not game_over:
             # col = random.randint(0, COL_COUNT-1)
             # col = pick_best_move(board)
-            is_alpha_beta = True
+            # is_alpha_beta = True
             my_depth = 3
-            col = next_move(board, my_depth, is_alpha_beta)
+            if game_type == 0:
+                col = random.randint(0, COL_COUNT - 1)
+            elif game_type == 1:
+                col = next_move(board, my_depth, False)
+            else:
+                col = next_move(board, my_depth, True)
 
             # col, score = minimax(board, 3, True)
             print("----------------------")
@@ -94,11 +104,49 @@ def start_game():
         if game_over:
             pygame.time.wait(3000)
 
-#
-# def game_menu():
-#     while True:
-#         screen.fill((0,0,255))
-#         draw_text("main menu", my_font)
+
+def game_menu():
+    # pygame.display.set_caption('Menu')
+    while True:
+        # screen.blit((0,0,255))
+        screen.blit(BG, (0, 0))
+
+        MENU_MOUSE_POS = pygame.mouse.get_pos()
+
+        MENU_TEXT = my_font.render("Connect Four", True, "#b68f40")
+        MENU_RECT = MENU_TEXT.get_rect(center=(350, 75))
+
+        random_button = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(350, 200),
+                               text_input="RANDOM", font=my_font, base_color="#d7fcd4", hovering_color="White")
+        no_pruning = Button(image=pygame.image.load("assets/Options Rect.png"), pos=(350, 325),
+                            text_input="No Pruning", font=my_font, base_color="#d7fcd4", hovering_color="White")
+        pruning = Button(image=pygame.image.load("assets/Options Rect.png"), pos=(350, 450),
+                         text_input="PRUNING", font=my_font, base_color="#d7fcd4", hovering_color="White")
+        quit_button = Button(image=pygame.image.load("assets/Quit Rect.png"), pos=(350, 575),
+                             text_input="QUIT", font=my_font, base_color="#d7fcd4", hovering_color="White")
+
+        screen.blit(MENU_TEXT, MENU_RECT)
+
+        for button in [random_button, no_pruning, pruning, quit_button]:
+            button.changeColor(MENU_MOUSE_POS)
+            button.update(screen)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if random_button.checkForInput(MENU_MOUSE_POS):
+                    start_game(0)
+                if no_pruning.checkForInput(MENU_MOUSE_POS):
+                    start_game(1)
+                if pruning.checkForInput(MENU_MOUSE_POS):
+                    start_game(2)
+                if quit_button.checkForInput(MENU_MOUSE_POS):
+                    pygame.quit()
+                    sys.exit()
+
+        pygame.display.update()
 
 
-start_game()
+game_menu()
