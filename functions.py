@@ -195,3 +195,6 @@ def valid_locations(board):
         if is_valid(board, c):
             valid.append(c)
     return valid
+
+
+

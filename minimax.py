@@ -1,6 +1,7 @@
 import math
 from Node import *
 from functions import *
+import time
 
 
 def minimax(board, depth, maximizing_player, root):
@@ -112,9 +113,13 @@ def minimax_alpha_beta(board, depth, alpha, beta, maximizing_player, root):
 
 def next_move(board, depth, alpha_beta):
     root = Node(None, -math.inf, True)
+    start_time = time.time()
     if alpha_beta:
         c = minimax_alpha_beta(board, depth, -math.inf, math.inf, True, root)[0]
     else:
         c = minimax(board, depth, True, root)[0]
-    root.printTree(2)
+    total_time = time.time() - start_time
+    root.printTree(0)
+    print("Time Taken: ", total_time, 's')
+    print("Nodes Expanded: ", get_tree_len(root), 'nodes')
     return c

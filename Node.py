@@ -20,9 +20,19 @@ class Node:
 
     def printTree(self, indentation_number):  # function to print the minimax tree
         if self.max_min:
-            my_string = "MAX"
+            string = "MAX"
         else:
-            my_string = "MIN"
-        print(indentation_number * '\t', my_string, " Score: ", self.score)
+            string = "MIN"
+        print(indentation_number * '\t', string, " Score: ", self.score, "\tdepth:", indentation_number)
         for child in self.children:
             child.printTree(indentation_number + 1)
+
+
+def get_tree_len(root):
+    if not root:
+        return 0
+    count = 1
+    children = root.get_children()
+    for child in children:
+        count += get_tree_len(child)
+    return count

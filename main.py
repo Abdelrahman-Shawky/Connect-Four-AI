@@ -103,7 +103,7 @@ def start_game(game_type, depth):
         # print(board)
         if game_over:
             pygame.time.wait(3000)
-            screen.fill((0,0,0))
+            screen.fill((0, 0, 0))
             screen.blit(BG, (0, 0))
 
 
@@ -154,7 +154,7 @@ def game_menu():
 def select_depth(game_type):
     # base_font = pygame.font.Font(None, 32)
     user_text = ''
-    screen.fill((0,0,0,))
+    screen.fill((0, 0, 0,))
     screen.blit(BG, (0, 0))
     pygame.display.update()
     input_rect = pygame.Rect(150, 200, 400, 100)
@@ -171,7 +171,7 @@ def select_depth(game_type):
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
         play_button = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(350, 400),
-                               text_input="PLAY", font=my_font, base_color="#d7fcd4", hovering_color="White")
+                             text_input="PLAY", font=my_font, base_color="#d7fcd4", hovering_color="White")
         back_button = Button(image=pygame.image.load("assets/Quit Rect.png"), pos=(350, 575),
                              text_input="BACK", font=my_font, base_color="#d7fcd4", hovering_color="White")
         for button in [play_button, back_button]:
