@@ -1,12 +1,6 @@
-import random
-import sys
 import math
-import numpy as np
-import pygame
 from Node import *
-from variables import *
 from functions import *
-# from main import add_tile, is_valid, get_row, AI, PLAYER, COL_COUNT, ROW_COUNT
 
 
 def minimax(board, depth, maximizing_player, root):

@@ -3,6 +3,71 @@ from functions import *
 import random
 
 
+def check_win(temp_board, r, c, tile, num=4):
+    count = 0
+    # Check horizontal
+    temp_col = c
+    temp_row = r
+    while temp_col >= 0 and temp_board[temp_row][temp_col] == tile:
+        count += 1
+        temp_col -= 1
+    temp_col = c
+    while temp_col < COL_COUNT and temp_board[temp_row][temp_col] == tile:
+        count += 1
+        temp_col += 1
+    if count - 1 == num:
+        return True
+    count = 0
+    temp_col = c
+
+    # Check Vertical
+    while temp_row >= 0 and temp_board[temp_row][temp_col] == tile:
+        count += 1
+        temp_row -= 1
+    temp_row = r
+    while temp_row < ROW_COUNT and temp_board[temp_row][temp_col] == tile:
+        count += 1
+        temp_row += 1
+    if count - 1 == num:
+        return True
+    count = 0
+
+    # Check Positive Diagonal
+    temp_col = c
+    temp_row = r
+    while temp_col >= 0 and temp_row >= 0 and temp_board[temp_row][temp_col] == tile:
+        count += 1
+        temp_row -= 1
+        temp_col -= 1
+    temp_col = c
+    temp_row = r
+    while temp_col < COL_COUNT and temp_row < ROW_COUNT and temp_board[temp_row][temp_col] == tile:
+        count += 1
+        temp_row += 1
+        temp_col += 1
+    if count - 1 == num:
+        return True
+    count = 0
+
+    # Check Negative Diagonal
+    temp_col = c
+    temp_row = r
+    while temp_col >= 0 and temp_row < ROW_COUNT and temp_board[temp_row][temp_col] == tile:
+        count += 1
+        temp_row += 1
+        temp_col -= 1
+    temp_col = c
+    temp_row = r
+    while temp_col < COL_COUNT and temp_row >= 0 and temp_board[temp_row][temp_col] == tile:
+        count += 1
+        temp_row -= 1
+        temp_col += 1
+    if count - 1 == num:
+        return True
+
+    return False
+
+
 # Check if column is  valid for insertion
 def is_valid(board, c):
     if board[ROW_COUNT - 1][c] == 0:
