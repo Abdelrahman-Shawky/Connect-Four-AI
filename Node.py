@@ -18,14 +18,14 @@ class Node:
     def print_children(self):
         pass
 
-    def printTree(self, indentation_number):  # function to print the minimax tree
+    def printTree(self, spaces):  # function to print the minimax tree
         if self.max_min:
             string = "MAX"
         else:
             string = "MIN"
-        print(indentation_number * '\t', string, " Score: ", self.score, "\tdepth:", indentation_number)
+        print(spaces * '\t', string, " Score: ", self.score, "\tdepth:", spaces)
         for child in self.children:
-            child.printTree(indentation_number + 1)
+            child.printTree(spaces + 1)
 
 
 def get_tree_len(root):

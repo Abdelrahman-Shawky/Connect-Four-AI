@@ -1,7 +1,6 @@
 from variables import *
 import random
 
-# global AI_ODD
 AI_ODD = False
 
 
@@ -115,7 +114,6 @@ def scoring(window, tile):
 
 def horizontal_scoring(window, tile, row):
     score = 0
-    print(AI_ODD)
     if tile == AI:
         opp = PLAYER
     else:
