@@ -97,7 +97,7 @@ def scoring(window, tile):
         opp = PLAYER
     else:
         opp = AI
-    if window.count(tile) == 4:
+    if window.count(tile) == 4:  # redundant
         score += 100
     elif window.count(tile) == 3 and window.count(0) == 1:
         score += 5
@@ -195,6 +195,3 @@ def valid_locations(board):
         if is_valid(board, c):
             valid.append(c)
     return valid
-
-
-

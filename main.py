@@ -13,7 +13,7 @@ my_font = pygame.font.SysFont("monospace", 60)
 BG = pygame.image.load("assets/Background.png")
 
 
-def start_game(game_type, depth):
+def start_game(game_type, depth=0):
     # Create empty board to start the game
     def create_board():
         board = np.zeros((ROW_COUNT, COL_COUNT))  # create 2D array
@@ -75,20 +75,13 @@ def start_game(game_type, depth):
                             game_over = True
                         turn = AI
         if turn == AI and not game_over:
-            # col = random.randint(0, COL_COUNT-1)
-            # col = pick_best_move(board)
-            # is_alpha_beta = True
-            # my_depth = 3
             if game_type == 0:
                 col = random.randint(0, COL_COUNT - 1)
             elif game_type == 1:
                 col = next_move(board, depth, False)
             else:
                 col = next_move(board, depth, True)
-
-            # col, score = minimax(board, 3, True)
-            print("----------------------")
-            # col, score = minimax_alpha_beta(board, 4, -math.inf, math.inf, True)
+            print("--------------------------------------------")
             if is_valid(board, col):
                 # pygame.time.wait(100)
                 row = get_row(board, col)
@@ -108,9 +101,7 @@ def start_game(game_type, depth):
 
 
 def game_menu():
-    # pygame.display.set_caption('Menu')
     while True:
-        # screen.blit((0,0,255))
         screen.blit(BG, (0, 0))
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
@@ -160,7 +151,6 @@ def select_depth(game_type):
     input_rect = pygame.Rect(150, 200, 400, 100)
     color_active = pygame.Color('lightskyblue3')
     color_passive = pygame.Color('gray15')
-    color = color_passive
     active = False
 
     while True:
@@ -187,7 +177,7 @@ def select_depth(game_type):
                     active = True
                 else:
                     active = False
-                if play_button.checkForInput((MENU_MOUSE_POS)):
+                if play_button.checkForInput(MENU_MOUSE_POS):
                     start_game(game_type, int(user_text))
                 if back_button.checkForInput(MENU_MOUSE_POS):
                     game_menu()
@@ -208,5 +198,4 @@ def select_depth(game_type):
         pygame.display.update()
 
 
-# select_depth(1)
 game_menu()

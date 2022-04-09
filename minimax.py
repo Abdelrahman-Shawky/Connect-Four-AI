@@ -15,7 +15,7 @@ def minimax(board, depth, maximizing_player, root):
             elif winning_move(board, PLAYER):
                 my_score = -1000000
                 root.score = my_score
-                return None, -my_score
+                return None, my_score
             else:  # full
                 return None, 0
         else:
@@ -31,12 +31,7 @@ def minimax(board, depth, maximizing_player, root):
             r = get_row(board, c)
             temp_board = board.copy()
             add_tile(temp_board, r, c, AI)
-            # print(temp_board)
             new_score = minimax(temp_board, depth-1, False, child_node)[1]
-            # print("2")
-            # print(new_score)
-            # print(new_score)
-            # print("--------------------------")
             if new_score > value:
                 value = new_score
                 best_col = c
@@ -64,9 +59,13 @@ def minimax_alpha_beta(board, depth, alpha, beta, maximizing_player, root):
     if depth == 0 or is_terminal(board):
         if is_terminal(board):
             if winning_move(board, AI):
-                return None, 10000000000
+                my_score = 1000000
+                root.score = my_score
+                return None, my_score
             elif winning_move(board, PLAYER):
-                return None, -1000000000
+                my_score = -1000000
+                root.score = my_score
+                return None, my_score
             else:
                 return None, 0
         else:
@@ -120,6 +119,7 @@ def next_move(board, depth, alpha_beta):
         c = minimax(board, depth, True, root)[0]
     total_time = time.time() - start_time
     root.printTree(0)
+    print("--------------------------------------------")
     print("Time Taken: ", total_time, 's')
     print("Nodes Expanded: ", get_tree_len(root), 'nodes')
     return c
