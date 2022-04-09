@@ -1,6 +1,9 @@
 from variables import *
 import random
 
+# global AI_ODD
+AI_ODD = False
+
 
 def check_win(temp_board, r, c, tile, num=4):
     count = 0
@@ -112,6 +115,7 @@ def scoring(window, tile):
 
 def horizontal_scoring(window, tile, row):
     score = 0
+    print(AI_ODD)
     if tile == AI:
         opp = PLAYER
     else:
@@ -209,7 +213,7 @@ def get_score(board, tile):
         current_col = [int(i) for i in list(board[:, c])]
         for r in range(ROW_COUNT - 3):
             window = current_col[r:r + 4]
-            score += scoring(window, tile)
+            score += vertical_scoring(window, tile, c)
 
     # Positive Diagonal
     for r in range(ROW_COUNT - 3):

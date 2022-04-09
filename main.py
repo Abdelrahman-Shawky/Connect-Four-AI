@@ -1,7 +1,7 @@
 import sys
 import pygame
+import functions
 from minimax import next_move
-# from gui import *
 from functions import *
 import numpy as np
 from Button import *
@@ -46,7 +46,9 @@ def start_game(game_type, depth=0):
     game_over = False  # start game with false
     turn = random.randint(PLAYER, AI)  # specify which player turn is it
     if turn == AI:
-        AI_ODD = True
+        functions.AI_ODD = True
+    else:
+        functions.AI_ODD = False
 
     draw_board(board)
 
