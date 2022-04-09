@@ -8,18 +8,6 @@ def minimax(board, depth, maximizing_player, root, game_mode):
     valid = valid_locations(board)
     if game_mode == 1:
         if depth == 0 or not valid:
-            # if is_terminal(board):
-            #     if winning_move(board, AI):
-            #         my_score = 100
-            #         root.score = my_score
-            #         return None, my_score
-            #     elif winning_move(board, PLAYER):
-            #         my_score = -100
-            #         root.score = my_score
-            #         return None, my_score
-            #     else:  # full
-            #         return None, 0
-            # else:
             my_score = get_score(board, AI)
             root.score = my_score
             return None, my_score
@@ -27,11 +15,11 @@ def minimax(board, depth, maximizing_player, root, game_mode):
         if depth == 0 or is_terminal(board):
             if is_terminal(board):
                 if winning_move(board, AI):
-                    my_score = 1000
+                    my_score = 10000
                     root.score = my_score
                     return None, my_score
                 elif winning_move(board, PLAYER):
-                    my_score = -1000
+                    my_score = -10000
                     root.score = my_score
                     return None, my_score
                 else:  # full
@@ -57,7 +45,6 @@ def minimax(board, depth, maximizing_player, root, game_mode):
         return best_col, value
     else:
         value = math.inf
-        print(valid)
         best_col = random.choice(valid)
         for c in valid:
             child_node = Node(root, -math.inf, root.get_child_state())
@@ -77,18 +64,6 @@ def minimax_alpha_beta(board, depth, alpha, beta, maximizing_player, root, game_
     valid = valid_locations(board)
     if game_mode == 1:
         if depth == 0 or not valid:
-            # if is_terminal(board):
-            #     if winning_move(board, AI):
-            #         my_score = 100
-            #         root.score = my_score
-            #         return None, my_score
-            #     elif winning_move(board, PLAYER):
-            #         my_score = -100
-            #         root.score = my_score
-            #         return None, my_score
-            #     else:  # full
-            #         return None, 0
-            # else:
             my_score = get_score(board, AI)
             root.score = my_score
             return None, my_score
@@ -96,11 +71,11 @@ def minimax_alpha_beta(board, depth, alpha, beta, maximizing_player, root, game_
         if depth == 0 or is_terminal(board):
             if is_terminal(board):
                 if winning_move(board, AI):
-                    my_score = 1000
+                    my_score = 10000
                     root.score = my_score
                     return None, my_score
                 elif winning_move(board, PLAYER):
-                    my_score = -1000
+                    my_score = -10000
                     root.score = my_score
                     return None, my_score
                 else:  # full

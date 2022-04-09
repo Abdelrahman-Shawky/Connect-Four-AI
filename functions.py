@@ -100,15 +100,15 @@ def scoring(window, tile):
     else:
         opp = AI
     if window.count(tile) == 4:
-        score += 100
+        score += 50
     elif window.count(tile) == 3 and window.count(0) == 1:
         score += 5
     elif window.count(tile) == 2 and window.count(0) == 2:
         score += 2
     if window.count(opp) == 3 and window.count(0) == 1:
-        score -= 30
-    elif window.count(opp) == 2 and window.count(0) == 2:
         score -= 20
+    elif window.count(opp) == 2 and window.count(0) == 2:
+        score -= 10
     return score
 
 
@@ -119,7 +119,7 @@ def horizontal_scoring(window, tile, row):
     else:
         opp = AI
     if window.count(tile) == 4:  # redundant
-        score += 100
+        score += 30
     elif window.count(tile) == 3 and window.count(0) == 1:
         if (AI_ODD and tile == AI) or (not AI_ODD and tile == PLAYER):
             if row == 1 or row == 3:
@@ -155,9 +155,9 @@ def horizontal_scoring(window, tile, row):
             else:
                 score += 2
     if window.count(opp) == 3 and window.count(0) == 1:
-        score -= 30
-    elif window.count(opp) == 2 and window.count(0) == 2:
         score -= 20
+    elif window.count(opp) == 2 and window.count(0) == 2:
+        score -= 10
     return score
 
 
@@ -168,7 +168,7 @@ def vertical_scoring(window, tile, col):
     else:
         opp = AI
     if window.count(tile) == 4:  # redundant
-        score += 100
+        score += 30
     elif window.count(tile) == 3 and window.count(0) == 1:
         if col == 4:
             score += 8
@@ -186,9 +186,9 @@ def vertical_scoring(window, tile, col):
         else:
             score += 2
     if window.count(opp) == 3 and window.count(0) == 1:
-        score -= 30
-    elif window.count(opp) == 2 and window.count(0) == 2:
         score -= 20
+    elif window.count(opp) == 2 and window.count(0) == 2:
+        score -= 10
     return score
 
 
@@ -197,7 +197,7 @@ def get_score(board, tile):
     # Center
     center = [int(i) for i in list(board[:, COL_COUNT // 2])]
     count = center.count(tile)
-    score += count * 3
+    score += count * 2
 
     # Horizontal
     for r in range(ROW_COUNT):

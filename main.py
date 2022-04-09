@@ -103,7 +103,6 @@ def start_game(game_mode, game_type, depth=0):
             else:
                 col = next_move(board, depth, True, game_mode)
             print("--------------------------------------------")
-            print(col)
             if is_valid(board, col):
                 # pygame.time.wait(100)
                 row = get_row(board, col)
@@ -132,7 +131,6 @@ def start_game(game_mode, game_type, depth=0):
                         pygame.display.update()
                         game_over = True
                 turn = PLAYER
-        # print(board)
         if game_over:
             pygame.time.wait(3000)
             screen.fill((0, 0, 0))
@@ -181,7 +179,6 @@ def game_menu(game_mode):
 
 
 def select_depth(game_mode, game_type):
-    # base_font = pygame.font.Font(None, 32)
     user_text = ''
     screen.fill((0, 0, 0,))
     screen.blit(BG, (0, 0))
@@ -231,7 +228,7 @@ def select_depth(game_mode, game_type):
             color = color_passive
         pygame.draw.rect(screen, color, input_rect, 2)
         text_surface = my_font.render(user_text, True, "#b68f40")
-        screen.blit(text_surface, (input_rect.x + 30, input_rect.y + 5))
+        screen.blit(text_surface, (input_rect.x + 30, input_rect.y + 15))
         input_rect.w = max(text_surface.get_width(), 400)
         pygame.display.update()
 
@@ -245,8 +242,6 @@ def select_mode():
         MENU_TEXT = my_font.render("Connect Four", True, "#b68f40")
         MENU_RECT = MENU_TEXT.get_rect(center=(350, 75))
 
-        # random_button = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(350, 200),
-        #                        text_input="RANDOM", font=my_font, base_color="#d7fcd4", hovering_color="White")
         normal_mode_button = Button(image=pygame.image.load("assets/Options Rect.png"), pos=(350, 250),
                             text_input="NORMAL", font=my_font, base_color="#d7fcd4", hovering_color="White")
         full_mode_button = Button(image=pygame.image.load("assets/Options Rect.png"), pos=(350, 375),
@@ -274,5 +269,6 @@ def select_mode():
                     sys.exit()
 
         pygame.display.update()
+
 
 select_mode()
