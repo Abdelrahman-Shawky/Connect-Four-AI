@@ -4,24 +4,42 @@ from functions import *
 import time
 
 
-def minimax(board, depth, maximizing_player, root):
+def minimax(board, depth, maximizing_player, root, game_mode):
     valid = valid_locations(board)
-    if depth == 0 or is_terminal(board):
-        if is_terminal(board):
-            if winning_move(board, AI):
-                my_score = 1000000
-                root.score = my_score
-                return None, my_score
-            elif winning_move(board, PLAYER):
-                my_score = -1000000
-                root.score = my_score
-                return None, my_score
-            else:  # full
-                return None, 0
-        else:
+    if game_mode == 1:
+        if depth == 0 or not valid:
+            # if is_terminal(board):
+            #     if winning_move(board, AI):
+            #         my_score = 100
+            #         root.score = my_score
+            #         return None, my_score
+            #     elif winning_move(board, PLAYER):
+            #         my_score = -100
+            #         root.score = my_score
+            #         return None, my_score
+            #     else:  # full
+            #         return None, 0
+            # else:
             my_score = get_score(board, AI)
             root.score = my_score
             return None, my_score
+    elif game_mode == 0:
+        if depth == 0 or is_terminal(board):
+            if is_terminal(board):
+                if winning_move(board, AI):
+                    my_score = 1000
+                    root.score = my_score
+                    return None, my_score
+                elif winning_move(board, PLAYER):
+                    my_score = -1000
+                    root.score = my_score
+                    return None, my_score
+                else:  # full
+                    return None, 0
+            else:
+                my_score = get_score(board, AI)
+                root.score = my_score
+                return None, my_score
     if maximizing_player:
         value = -math.inf
         best_col = random.choice(valid)
@@ -31,7 +49,7 @@ def minimax(board, depth, maximizing_player, root):
             r = get_row(board, c)
             temp_board = board.copy()
             add_tile(temp_board, r, c, AI)
-            new_score = minimax(temp_board, depth-1, False, child_node)[1]
+            new_score = minimax(temp_board, depth-1, False, child_node, game_mode)[1]
             if new_score > value:
                 value = new_score
                 best_col = c
@@ -39,6 +57,7 @@ def minimax(board, depth, maximizing_player, root):
         return best_col, value
     else:
         value = math.inf
+        print(valid)
         best_col = random.choice(valid)
         for c in valid:
             child_node = Node(root, -math.inf, root.get_child_state())
@@ -46,7 +65,7 @@ def minimax(board, depth, maximizing_player, root):
             r = get_row(board, c)
             temp_board = board.copy()
             add_tile(temp_board, r, c, PLAYER)
-            new_score = minimax(temp_board, depth - 1, True, child_node)[1]
+            new_score = minimax(temp_board, depth - 1, True, child_node, game_mode)[1]
             if new_score < value:
                 value = new_score
                 best_col = c
@@ -54,22 +73,42 @@ def minimax(board, depth, maximizing_player, root):
         return best_col, value
 
 
-def minimax_alpha_beta(board, depth, alpha, beta, maximizing_player, root):
+def minimax_alpha_beta(board, depth, alpha, beta, maximizing_player, root, game_mode):
     valid = valid_locations(board)
-    if depth == 0 or is_terminal(board):
-        if is_terminal(board):
-            if winning_move(board, AI):
-                my_score = 1000000
-                root.score = my_score
-                return None, my_score
-            elif winning_move(board, PLAYER):
-                my_score = -1000000
-                root.score = my_score
-                return None, my_score
+    if game_mode == 1:
+        if depth == 0 or not valid:
+            # if is_terminal(board):
+            #     if winning_move(board, AI):
+            #         my_score = 100
+            #         root.score = my_score
+            #         return None, my_score
+            #     elif winning_move(board, PLAYER):
+            #         my_score = -100
+            #         root.score = my_score
+            #         return None, my_score
+            #     else:  # full
+            #         return None, 0
+            # else:
+            my_score = get_score(board, AI)
+            root.score = my_score
+            return None, my_score
+    elif game_mode == 0:
+        if depth == 0 or is_terminal(board):
+            if is_terminal(board):
+                if winning_move(board, AI):
+                    my_score = 1000
+                    root.score = my_score
+                    return None, my_score
+                elif winning_move(board, PLAYER):
+                    my_score = -1000
+                    root.score = my_score
+                    return None, my_score
+                else:  # full
+                    return None, 0
             else:
-                return None, 0
-        else:
-            return None, get_score(board, AI)
+                my_score = get_score(board, AI)
+                root.score = my_score
+                return None, my_score
     if maximizing_player:
         value = -math.inf
         best_col = random.choice(valid)
@@ -79,7 +118,7 @@ def minimax_alpha_beta(board, depth, alpha, beta, maximizing_player, root):
             r = get_row(board, c)
             temp_board = board.copy()
             add_tile(temp_board, r, c, AI)
-            new_score = minimax_alpha_beta(temp_board, depth-1, alpha, beta, False, child_node)[1]
+            new_score = minimax_alpha_beta(temp_board, depth-1, alpha, beta, False, child_node, game_mode)[1]
             if new_score > value:
                 value = new_score
                 best_col = c
@@ -98,7 +137,7 @@ def minimax_alpha_beta(board, depth, alpha, beta, maximizing_player, root):
             r = get_row(board, c)
             temp_board = board.copy()
             add_tile(temp_board, r, c, PLAYER)
-            new_score = minimax_alpha_beta(temp_board, depth - 1, alpha, beta, True, child_node)[1]
+            new_score = minimax_alpha_beta(temp_board, depth - 1, alpha, beta, True, child_node, game_mode)[1]
             if new_score < value:
                 value = new_score
                 best_col = c
@@ -110,13 +149,13 @@ def minimax_alpha_beta(board, depth, alpha, beta, maximizing_player, root):
         return best_col, value
 
 
-def next_move(board, depth, alpha_beta):
+def next_move(board, depth, alpha_beta, game_mode):
     root = Node(None, -math.inf, True)
     start_time = time.time()
     if alpha_beta:
-        c = minimax_alpha_beta(board, depth, -math.inf, math.inf, True, root)[0]
+        c = minimax_alpha_beta(board, depth, -math.inf, math.inf, True, root, game_mode)[0]
     else:
-        c = minimax(board, depth, True, root)[0]
+        c = minimax(board, depth, True, root, game_mode)[0]
     total_time = time.time() - start_time
     root.printTree(0)
     print("--------------------------------------------")

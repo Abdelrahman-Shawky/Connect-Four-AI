@@ -99,7 +99,7 @@ def scoring(window, tile):
         opp = PLAYER
     else:
         opp = AI
-    if window.count(tile) == 4:  # redundant
+    if window.count(tile) == 4:
         score += 100
     elif window.count(tile) == 3 and window.count(0) == 1:
         score += 5
@@ -271,8 +271,42 @@ def winning_move(board, tile):
                 return True
 
 
+def count_score(board, tile):
+    score = 0
+    # Check horizontal locations for win
+    for c in range(COL_COUNT - 3):
+        for r in range(ROW_COUNT):
+            if board[r][c] == tile and board[r][c + 1] == tile and board[r][c + 2] == tile and board[r][c + 3] == tile:
+                score += 1
+
+    # Check vertical locations for win
+    for c in range(COL_COUNT):
+        for r in range(ROW_COUNT - 3):
+            if board[r][c] == tile and board[r + 1][c] == tile and board[r + 2][c] == tile and board[r + 3][c] == tile:
+                score += 1
+
+    # Check positively sloped diagonals
+    for c in range(COL_COUNT - 3):
+        for r in range(ROW_COUNT - 3):
+            if board[r][c] == tile and board[r + 1][c + 1] == tile and board[r + 2][c + 2] == tile and board[r + 3][
+                c + 3] == tile:
+                score += 1
+
+    # Check negatively sloped diagonals
+    for c in range(COL_COUNT - 3):
+        for r in range(3, ROW_COUNT):
+            if board[r][c] == tile and board[r - 1][c + 1] == tile and board[r - 2][c + 2] == tile and board[r - 3][
+                c + 3] == tile:
+                score += 1
+    return score
+
+
 def is_terminal(board):
     return winning_move(board, AI) or winning_move(board, PLAYER) or len(valid_locations(board)) == 0
+
+
+def check_full(board):
+    return len(valid_locations(board)) == 0
 
 
 def valid_locations(board):
