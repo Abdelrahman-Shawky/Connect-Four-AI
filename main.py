@@ -45,6 +45,8 @@ def start_game(game_type, depth=0):
     board = create_board()  # create the empty board
     game_over = False  # start game with false
     turn = random.randint(PLAYER, AI)  # specify which player turn is it
+    if turn == AI:
+        AI_ODD = True
 
     draw_board(board)
 
@@ -69,7 +71,7 @@ def start_game(game_type, depth=0):
                         add_tile(board, row, col, turn)
                         draw_board(board)
                         if check_win(board, row, col, turn):
-                            label = my_font.render("Player 1 wins", True, RED)
+                            label = my_font.render("Player wins", True, RED)
                             screen.blit(label, (40, 10))
                             pygame.display.update()
                             game_over = True
