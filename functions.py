@@ -118,7 +118,7 @@ def horizontal_scoring(window, tile, row):
         opp = PLAYER
     else:
         opp = AI
-    if window.count(tile) == 4:  # redundant
+    if window.count(tile) == 4:
         score += 30
     elif window.count(tile) == 3 and window.count(0) == 1:
         if (AI_ODD and tile == AI) or (not AI_ODD and tile == PLAYER):
@@ -167,7 +167,7 @@ def vertical_scoring(window, tile, col):
         opp = PLAYER
     else:
         opp = AI
-    if window.count(tile) == 4:  # redundant
+    if window.count(tile) == 4:
         score += 30
     elif window.count(tile) == 3 and window.count(0) == 1:
         if col == 4:

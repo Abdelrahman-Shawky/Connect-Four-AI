@@ -74,7 +74,12 @@ def start_game(game_mode, game_type, depth=0):
                         draw_board(board)
                         if game_mode == 0:
                             if check_win(board, row, col, turn):
-                                label = my_font.render("Player wins", True, RED)
+                                label = my_font.render("YOU Win", True, RED)
+                                screen.blit(label, (40, 10))
+                                pygame.display.update()
+                                game_over = True
+                            if check_full(board):
+                                label = my_font.render("Tie", True, YELLOW)
                                 screen.blit(label, (40, 10))
                                 pygame.display.update()
                                 game_over = True
@@ -83,7 +88,7 @@ def start_game(game_mode, game_type, depth=0):
                                 player_score = count_score(board, PLAYER)
                                 ai_score = count_score(board, AI)
                                 if player_score > ai_score:
-                                    label_string = "Player Wins Score: " + str(player_score)
+                                    label_string = "YOU Win Score: " + str(player_score)
                                     label = my_font.render(label_string, True, RED)
                                 elif ai_score > player_score:
                                     label_string = "AI Wins Score: " + str(ai_score)
@@ -114,6 +119,11 @@ def start_game(game_mode, game_type, depth=0):
                         screen.blit(label, (40, 10))
                         pygame.display.update()
                         game_over = True
+                    if check_full(board):
+                        label = my_font.render("Tie", True, YELLOW)
+                        screen.blit(label, (40, 10))
+                        pygame.display.update()
+                        game_over = True
                 elif game_mode == 1:
                     if check_full(board):
                         player_score = count_score(board, PLAYER)
@@ -132,7 +142,7 @@ def start_game(game_mode, game_type, depth=0):
                         game_over = True
                 turn = PLAYER
         if game_over:
-            pygame.time.wait(3000)
+            pygame.time.wait(4000)
             screen.fill((0, 0, 0))
             screen.blit(BG, (0, 0))
 
