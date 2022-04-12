@@ -3,7 +3,7 @@
 dropping their colored discs from the top into a grid. The pieces fall straight down, occupying
 the next available space within the column. The objective of the game is to connect-four of
 one’s own discs of the same color next to each other vertically, horizontally, or diagonally.
-<p align="center"><img src="assets/screenshot.PNG"></p>
+<p align="center"><img src="assets/screenshot.PNG" height="500"></p>
 
 ## Modes
 - Normal Mode
